@@ -50,7 +50,7 @@ public class GPPublicRaids extends JavaPlugin {
     }
 
     public void onPlayerTriggerRaid(RaidTriggerEvent event) {
-
+        getLogger().info("Um player tentou ativar uma raid");
         event.setCancelled(true);
     }
 
