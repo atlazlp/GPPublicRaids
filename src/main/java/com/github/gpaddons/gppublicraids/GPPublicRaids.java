@@ -79,7 +79,7 @@ public class GPPublicRaids extends JavaPlugin{
             if (claim.hasExplicitPermission(player, ClaimPermission.Build)) {
                 getLogger().info("É o dono da claim");
                 GriefPrevention.sendMessage(player, ChatColor.RED, "Você é o dono da claim");
-                GriefPrevention.sendMessage(player, ChatColor.RED, ""+player.getUniqueId());
+                //GriefPrevention.sendMessage(player, ChatColor.RED, ""+player.getUniqueId());
             } else {
                 getLogger().info("Não é o dono da claim");
                 GriefPrevention.sendMessage(player, ChatColor.RED, "Você não é o dono da claim");
