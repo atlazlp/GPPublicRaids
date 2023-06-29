@@ -53,6 +53,7 @@ public class GPPublicRaids extends JavaPlugin{
         getCommand("claimallowpublicraids").setExecutor(this);
     }
 
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerTriggerRaid(RaidTriggerEvent event) {
         getLogger().info("Um player tentou ativar uma raid");
         event.setCancelled(true);
@@ -69,10 +70,12 @@ public class GPPublicRaids extends JavaPlugin{
             player = (Player) sender;
         }
 
-        getLogger().info("Rodando um comando - (ATLAZLP)");
         if (command.getName().equalsIgnoreCase("claimallowpublicraids") && player != null) {
-            getLogger().info("Comando Rodou - (ATLAZLP)");
             Claim claim = dataStore.getClaimAt(player.getLocation(), true, null);
+            if (claim == null) {
+                GriefPrevention.sendMessage(player, ChatColor.RED, "Este comando só pode ser executado em uma claim");
+                return false;
+            }
             if (claim.hasExplicitPermission(player, ClaimPermission.Build)) {
                 getLogger().info("É o dono da claim");
                 GriefPrevention.sendMessage(player, ChatColor.RED, "Você é o dono da claim");
