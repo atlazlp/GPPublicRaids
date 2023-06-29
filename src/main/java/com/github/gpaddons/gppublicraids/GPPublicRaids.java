@@ -15,6 +15,7 @@ import me.ryanhamshire.GriefPrevention.DataStore;
 
 // Bukkit config imports
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.entity.Player;
 
@@ -27,26 +28,28 @@ import org.bukkit.event.raid.RaidTriggerEvent;
 
 // Bukkit command imports
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class GPPublicRaids extends JavaPlugin {
+public class GPPublicRaids extends JavaPlugin{
 
-    private GriefPrevention instance;
+    private GriefPrevention griefPrevention;
+    private DataStore dataStore;
 
     @Override
     public void onEnable() {
-        instance = GriefPrevention.instance;
+         griefPrevention = (GriefPrevention)getServer().getPluginManager().getPlugin("GriefPrevention");
+         dataStore = griefPrevention.dataStore;
         getLogger().info("Plugin carregado");
-        if (instance != null) {
+        if (griefPrevention != null) {
             getLogger().info("Acesso a instancia");
-        } else {
-            getLogger().info("Sem acesso a instancia");
         }
-        if (instance.dataStore != null) {
+        if (dataStore != null) {
             getLogger().info("Acesso a DataStore");
         } else {
             getLogger().info("Sem acesso a DataStore");
         }
+        getCommand("claimallowpublicraids").setExecutor(this);
     }
 
     public void onPlayerTriggerRaid(RaidTriggerEvent event) {
@@ -54,7 +57,6 @@ public class GPPublicRaids extends JavaPlugin {
         event.setCancelled(true);
     }
 
-    @Override
     public boolean onCommand(
             @NotNull CommandSender sender,
             @NotNull Command command,
@@ -66,13 +68,17 @@ public class GPPublicRaids extends JavaPlugin {
             player = (Player) sender;
         }
 
+        getLogger().info("Rodando um comando - (ATLAZLP)");
         if (command.getName().equalsIgnoreCase("claimallowpublicraids") && player != null) {
-            getLogger().info("Commando Rodou");
-            Claim claim = instance.dataStore.getClaimAt(player.getLocation(), true, null);
+            getLogger().info("Comando Rodou - (ATLAZLP)");
+            Claim claim = dataStore.getClaimAt(player.getLocation(), true, null);
             if (claim.hasExplicitPermission(player, ClaimPermission.Build)) {
                 getLogger().info("É o dono da claim");
+                GriefPrevention.sendMessage(player, ChatColor.RED, "Você é o dono da claim");
+                GriefPrevention.sendMessage(player, ChatColor.RED, ""+player.getUniqueId());
             } else {
                 getLogger().info("Não é o dono da claim");
+                GriefPrevention.sendMessage(player, ChatColor.RED, "Você não é o dono da claim");
             }
             // determine which claim the player is standing in
             /* Claim claim = this.dataStore.getClaimAt(player.getLocation(), true, null);
