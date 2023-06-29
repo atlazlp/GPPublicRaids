@@ -33,6 +33,7 @@ import org.bukkit.command.CommandSender;
 
 public class GPPublicRaids extends JavaPlugin{
 
+    protected GPPublicRaids plugin;
     private GriefPrevention griefPrevention;
     private DataStore dataStore;
 

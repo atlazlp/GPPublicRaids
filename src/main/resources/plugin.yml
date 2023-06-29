@@ -6,3 +6,9 @@ author: "${project.developers[0].name}"
 description: "${project.description}"
 depend:
   - GriefPrevention
+commands:
+    claimallowpublicraids:
+      description: Toggles whether raids can only be triggered by trusted players.
+      usage: /ClaimAllowPublicRaids
+      permission: griefprevention.claims
+      aliases: claimallowpublicraids
