@@ -67,8 +67,8 @@ public class GPPublicRaids extends JavaPlugin {
         }
 
         if (command.getName().equalsIgnoreCase("claimallowpublicraids") && player != null) {
-            Claim claim = instance.dataStore.getClaimAt(player.getLocation(), true, null);
             getLogger().info("Commando Rodou");
+            Claim claim = instance.dataStore.getClaimAt(player.getLocation(), true, null);
             if (claim.hasExplicitPermission(player, ClaimPermission.Build)) {
                 getLogger().info("É o dono da claim");
             } else {
